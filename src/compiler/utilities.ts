@@ -1385,6 +1385,8 @@ namespace ts {
      * exactly one argument (of the form 'require("name")').
      * This function does not test if the node is in a JavaScript file or not.
      */
+    export function isRequireCall(callExpression: Node, checkArgumentIsStringLiteral: true): callExpression is CallExpression & { expression: Identifier, arguments: [StringLiteralLike] };
+    export function isRequireCall(callExpression: Node, checkArgumentIsStringLiteral: boolean): callExpression is CallExpression;
     export function isRequireCall(callExpression: Node, checkArgumentIsStringLiteral: boolean): callExpression is CallExpression {
         if (callExpression.kind !== SyntaxKind.CallExpression) {
             return false;
@@ -1903,6 +1905,10 @@ namespace ts {
 
     export function isKeyword(token: SyntaxKind): boolean {
         return SyntaxKind.FirstKeyword <= token && token <= SyntaxKind.LastKeyword;
+    }
+
+    export function isContextualKeyword(token: SyntaxKind): boolean {
+        return SyntaxKind.FirstContextualKeyword <= token && token <= SyntaxKind.LastContextualKeyword;
     }
 
     export function isTrivia(token: SyntaxKind) {
